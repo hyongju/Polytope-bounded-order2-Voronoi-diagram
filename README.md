@@ -1,5 +1,5 @@
 # Polytope-bounded-order2-Voronoi-diagram
-This program creates order-2 Voronoi Diagram with set of points in 2D/3D polygon.
+This program creates order-2 Voronoi diagram with set of points in 2D/3D polygon. The function uses my previous program "polybnd_voronoi.m" that computes polytope bounded ordinary Voronoi diagram.
 
 
 Here are the description of the uploads.
