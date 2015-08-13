@@ -1,11 +1,14 @@
 # Polytope-bounded-order2-Voronoi-diagram
 This program creates order-2 Voronoi Diagram with set of points in 2D/3D polygon.
 
+
 Here are the description of the uploads.
 
 "DEMO.m" an example
 
-"polybnd_voronoi.m" main function that obtains polytope bounded Voronoi diagram 
+"polybnd_order2voronoi.m" is the main function that obtains polytope bounded order-2 Voronoi diagram
+
+"polybnd_voronoi.m" is a function that obtains polytope bounded Voronoi diagram 
 
 "pbisec.m" obtains half space created with perpendicular bisector of two points in the form Ax <= b
 
