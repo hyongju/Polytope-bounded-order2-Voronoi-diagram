@@ -19,3 +19,5 @@ Here are the description of the uploads.
 "inhull.m" tests if a set of points are inside a convex hull (written by John D'Errico)
 
 "MY_setdiff.m", "MY_intersect.m" are much fasten than MATLAB built-in "setdiff.m", "intersect.m". Two functions are written by Nick (http://www.mathworks.com/matlabcentral/profile/authors/1739467-nick)
+
+"distinguishable_colors.m" picks colors that are maximally perceptually distinct. The function is written by Timothy E. Holy.
