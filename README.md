@@ -4,7 +4,7 @@ This program creates order-2 Voronoi diagram with set of points in 2D/3D polygon
 
 Here are the description of the uploads.
 
-"DEMO.m" an example
+"DEMO.m" provides an example
 
 "polybnd_order2voronoi.m" is the main function that obtains polytope bounded order-2 Voronoi diagram
 
