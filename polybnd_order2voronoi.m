@@ -3,7 +3,7 @@ function [voronoi_rg,vornb,vornb2] = polybnd_order2voronoi(pos,bnd_pnts)
 %% =======================================================
 % Order-2 Voronoi Diagram with set of points in 2D/3D polygon
 % ========================================================
-% version 0.95
+% version 1.01
 % by Hyongju Park
 %---------------------------------------------------------
 % inputs: bnd_pnts      boundary points                m x 2
@@ -24,8 +24,8 @@ function [voronoi_rg,vornb,vornb2] = polybnd_order2voronoi(pos,bnd_pnts)
 % -------------------------------------------------------------------------
 % Written by Hyongju Park, hyongju@gmail.com / park334@illinois.edu
 % Change logs:
-% 11 Aug 2015: skip error messages (version 0.95) 
-% 5  May 2015: initial release (version 0.9)
+% 11 Aug 2015: skip error messages (version 1.01) 
+% 5  May 2015: initial release (version 1.0)
 % =========================================================================
 % Known issues:
 % Input points must satisfy assumptions such as non co-circularity and
