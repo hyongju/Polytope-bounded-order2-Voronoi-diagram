@@ -11,7 +11,7 @@ m = 100;                                    % number of points for boundary
 bnd0 = net(p1_1,m);                         % generate boundary point-candidates
 K = convhull(bnd0);
 bnd_pnts = bnd0(K,:);                       % take boundary points from vertices of convex polytope formed with the boundary point-candidates
-pos = p1_2(inhull(p1_2,bnd0,[],0.001),:);            % n' out of n points contained in bnd_pnts
+pos = p1_2(inhull(p1_2,bnd0,),:);            % n' out of n points contained in bnd_pnts
 
 %% call function "polybnd_order2voronoi.m"
 %% 
