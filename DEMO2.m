@@ -13,7 +13,7 @@ figure,plot(pos(:,1),pos(:,2),'x');axis([0 1 0 1]);
 % % pos = rand(n,d);
 % % pos = [0.15 1-0.15;1-0.15 1-0.15;0.5 0.5;0.15 0.15;1-0.15 0.15];
 vmax = 1/eps;       % velocity constraint is RELAXED....
-stage = 100;
+stage = 10;
 % bnd_pnts = [0 1;1 1;1 0;0 0];
 m = 50;             % # of vertices for the outter polytope
 p2_0 = net(p1_1,m);
@@ -96,17 +96,20 @@ axis('equal')
 axis([0 1 0 1]);
 set(gca,'xtick',[]);
 set(gca,'ytick',[]);  
-% 
-% res = 30;
-% k_p = 5;
-% M = animation_func9vor2_fin3(p_sav',res,n,0,bnd_pnts,k_p,adv);
-% h2 = figure('position',[100 100 600 600],'Color',[1 1 1]);
-% axis('square')
-% axis([0 1 0 1 0 1])
-% axis('off')
-% set(gca,'xtick',[]);
-% set(gca,'ytick',[]);
-% movie(h2,M,1,30);
+
+p_ani{1} = p_sav{1};
+p_ani{2} = p_sav{stage+1};
+
+res = 10;
+k_p = 5;
+M = animationFunc(p_ani',res,n,0,bnd_pnts,k_p,adv);
+h2 = figure('position',[100 100 600 600],'Color',[1 1 1]);
+axis('square')
+axis([0 1 0 1 0 1])
+axis('off')
+set(gca,'xtick',[]);
+set(gca,'ytick',[]);
+movie(h2,M,1,30);
 % movie2avi(M, 'please_help3.avi', 'compression', 'None','quality',100,'fps',30);
 % % 
 % % 
