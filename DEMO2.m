@@ -1,7 +1,7 @@
 % THIS IS A VERSION WITH NO FAILURES....
 clear all;close all;clc
 %% generate random samples
-n = 20;
+n = 10;
 % % m = 15;
 d = 2;
 eta = 1/2;
@@ -18,14 +18,15 @@ stage = 10;
 m = 50;             % # of vertices for the outter polytope
 p2_0 = net(p1_1,m);
 bnd_idx = convhull(p2_0);
-bnd_pnts = p2_0(bnd_idx,:);
+% bnd_pnts = p2_0(bnd_idx,:);
+bnd_pnts = [0 1;1 1;1 0;0 0];
 n1 = 10000;         % number of quasi-random samples to compute the cost (Monte-Carlo)
 % n1 should be at least > 1000 for accuracy...                
 p2  = net(p1_1,n1); % generate samples points for Monte-Carlo
 p_sav{1} = pos;
 % adv = [1 2 3 4 5];
-adv = [];           % index set of faulty nodes
-type = 1;
+adv = [1 2];           % index set of faulty nodes
+type = 3;
 p_sav{1} = pos;
 n1 = size(p2,1);
  
@@ -109,7 +110,7 @@ axis([0 1 0 1 0 1])
 axis('off')
 set(gca,'xtick',[]);
 set(gca,'ytick',[]);
-movie(h2,M,1,30);
+movie(h2,M(5),1,30);
 % movie2avi(M, 'please_help3.avi', 'compression', 'None','quality',100,'fps',30);
 % % 
 % % 
