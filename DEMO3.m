@@ -30,7 +30,7 @@ p_sav{1} = pos;
 n1 = size(p2,1);
  
 %% call function
-for t = 1:stage;
+for t = 1:stage
     t
     [voronoi_rg{t},neib1{t},neib2{t}] = polybnd_order2voronoi(pos,bnd_pnts);
     

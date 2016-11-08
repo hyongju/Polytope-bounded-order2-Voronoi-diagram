@@ -130,3 +130,10 @@ movie(h2,M,1,30);
 % set(gca,'ztick',[0 1]);
 % view(3)
  
+% Normal distribution, generating PDF....
+% mu = [0.5 0.5]
+% SIGMA = [0.02 0; 0 0.02];
+% X = mvnrnd(mu,SIGMA,10000);
+% p = mvnpdf(X,mu,SIGMA);
+
+

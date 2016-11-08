@@ -151,9 +151,8 @@ function [V,nr] = MY_con2vert(A,b)
 flg = 0;
 c = A\b;
 if ~all(A*c < b)
-    %obj1 = @(c) obj(c, {A,b});
-    [c,~,ef] = fminsearch( @(x)obj(x, {A,b}),c);
-%     [c,~,ef] = fminsearch(@obj,c,A,b);
+    
+    [c,~,ef] = fminsearch(@obj,c,'params',{A,b});
     if ef ~= 1
         flg = 1;
     end
@@ -180,12 +179,9 @@ V = G + repmat(c',[size(G,1),1]);
 V=V(I,:);
 end
 return
-function d = obj(c,param)
-A = param{1};
-b = param{2};
-% ,A,b
-% A=params{1};
-% b=params{2};
+function d = obj(c,params)
+A=params{1};
+b=params{2};
 d = A*c-b;
 k=(d>=-1e-15);
 d(k)=d(k)+1;
