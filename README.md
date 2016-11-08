@@ -1,10 +1,10 @@
 # Polytope-bounded-order2-Voronoi-diagram
-This program deploys a set of nodes to its locally optimal configuration in the sense of order-2 Voronoi
+This program creates order-2 Voronoi diagram with set of points in 2D/3D polygon. The function uses my previous program "polybnd_voronoi.m" that computes polytope bounded ordinary Voronoi diagram.
 
 
 Here are the description of the uploads.
 
-"DEMO2.m" provides an example
+"DEMO.m" provides an example
 
 "polybnd_order2voronoi.m" is the main function that obtains polytope bounded order-2 Voronoi diagram
 
