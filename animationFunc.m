@@ -7,7 +7,7 @@
 %%% adv_idx - the heterogeneous agents' index. e.g. given p{1} above, if
 %%% agent 1, and 3 is the hetero-agents, adv_idx is a row vector [1 3]
 
-function M = animationFunc(p,resolution,n,f,bnd_pnts,k_p,adv)
+function [M,prec] = animationFunc(p,resolution,n,f,bnd_pnts,k_p,adv)
 % pos_init = [23.5425   25.9122];
 % pos_init2 = repmat(pos_init,size(p{1},1),1);
 % color_code = jet(100);
@@ -100,6 +100,7 @@ for i = 1:N-1
         axis([-0.05 50.05 -0.05 50.05]/50);
         axis('off');
         k = k + 1;
+        prec{k} = p_appended{i}{j};
         set(gca,'xtick',[]);
         set(gca,'ytick',[]);
         xlabel([]);
