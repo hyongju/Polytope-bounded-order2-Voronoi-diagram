@@ -22,6 +22,7 @@ for i = 1:n
                 q1{i,j} = p2(find(in1{i,j}),:);
                 %%%%%%%%%%%
                 for l = 1:size(q1{i,j},1)
+                    % function f_val = f_exp(p1,p2,coef
                     sum1{j} = sum1{j} + norm(q1{i,j}(l,:) - pos(neib1{i}(j),:))^2 * q1{i,j}(l,:);
                     sum2{j} = sum2{j} + norm(q1{i,j}(l,:) - pos(neib1{i}(j),:))^2;
                 end

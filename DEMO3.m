@@ -1,7 +1,7 @@
 % THIS IS A VERSION WITH NO FAILURES....
 clear all;close all;clc
 %% generate random samples
-n = 20;
+n = 5;
 % % m = 15;
 d = 2;
 eta = 1/2;

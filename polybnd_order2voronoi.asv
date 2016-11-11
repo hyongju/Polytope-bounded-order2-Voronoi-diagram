@@ -32,7 +32,7 @@ function [voronoi_rg,vornb,vornb2] = polybnd_order2voronoi(pos,bnd_pnts)
 % general position assumptions
 % -------------------------------------------------------------------------
 %%
-[vornb,vorvx,~] = polybnd_voronoi(pos,bnd_pnts);      % 
+[vornb,~,~] = polybnd_voronoi(pos,bnd_pnts);      % 
 % obtain set of voronoi neighbors/vertices
 [Abnd,bbnd] = vert2lcon(bnd_pnts);              % obtain series of linear inequalities that defined Voronoi regions
 %% create list
@@ -49,7 +49,7 @@ for m1 =1:size(vornb2,2)
     for j = 1:size(vornb2{m1},2)
         c1 = m1;
         c2 = vornb2{m1}(1,j);
-        clear Aag1 bag1 Aag2 bag2 Aagmt bagmt pos1 pos2
+        clear Aag1 bag1 Aag2 bag2 Aagmt bagmt pos1 pos2 IDl Vl
         % given (c1,c2) where c1< c2
         % remove c2, compute voronoi vertices of c1
         k = 0;
@@ -72,9 +72,10 @@ for m1 =1:size(vornb2,2)
         Aagmt = [Aag1{c1};Aag2{c2-1};Abnd];
         bagmt = [bag1{c1};bag2{c2-1};bbnd];
         Vl{c1,c2}= MY_con2vert(Aagmt,bagmt);
-        % remove Voronoi regions that are not in the boundary
         if ~isempty(Vl{c1,c2})
-            if inhull(Vl{c1,c2},vorvx{c1},[],0.001) & inhull(Vl{c1,c2},vorvx{c2},[],1.e-13*mean(abs(bnd_pnts(:)))) 
+            % remove Voronoi regions that are not in the interior of the polytope
+            if inhull(Vl{c1,c2},bnd_pnts,[],0.001)
+%             if inhull(Vl{c1,c2},vorvx{c1},[],0.001) & inhull(Vl{c1,c2},vorvx{c2},[],1.e-13*mean(abs(bnd_pnts(:)))) 
                 IDl{c1,c2} = convhull(Vl{c1,c2});
                 voronoi_rg{c1,c2} = Vl{c1,c2}(IDl{c1,c2},:);
             else
