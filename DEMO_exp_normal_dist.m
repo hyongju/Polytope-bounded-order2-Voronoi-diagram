@@ -1,7 +1,7 @@
 % THIS IS A VERSION WITH NO FAILURES....
 clear all;close all;clc
 %% generate random samples
-n = 20;
+n = 10;
 % % m = 15;
 d = 2;
 eta = 1/2;
@@ -14,7 +14,7 @@ figure,plot(pos(:,1),pos(:,2),'x');axis([0 1 0 1]);
 % % pos = [0.15 1-0.15;1-0.15 1-0.15;0.5 0.5;0.15 0.15;1-0.15 0.15];
 vmax = 1/eps;       % velocity constraint is RELAXED....
 stage = 30;
-coef = 1000;
+coef = 100;
 
 % bnd_pnts = [0 1;1 1;1 0;0 0];
 m = 50;             % # of vertices for the outter polytope
@@ -70,8 +70,12 @@ view(0,90)
 % p2  = net(p1_1,n1); % generate samples points for Monte-Carlo
 p_sav{1} = pos;
 % adv = [1 2 3 4 5];
-adv = [];           % index set of faulty nodes
+adv = [1];           % index set of faulty nodes
 type = 1;
+% type 1 - sensor failure
+% type 2 - servo failure
+% type 3 - sensor/servo failure
+
 p_sav{1} = pos;
 % n1 = size(p2,1);
 p2 = X_int;
@@ -114,7 +118,7 @@ cst
 figure,plot(1:stage,cst,'-s');xlabel('stage');ylabel('cost');
 h0 = figure('position',[0 0 700 700],'Color',[1 1 1]);
 k = 0;
-t = 16;
+t = 1;
 for i = 1:size(voronoi_rg{t},1)*size(voronoi_rg{t},2)
     col(i,:)= rand(1,3);
 %     col(i,:) = [i/(size(voronoi_rg{t},1)*size(voronoi_rg{t},2)) 1 1];
@@ -137,8 +141,8 @@ end
 bdp = convhull(bnd_pnts);
 plot(bnd_pnts(bdp,1),bnd_pnts(bdp,2),'b-');
 hold on;
-plot(p_sav{t}(:,1),p_sav{t}(:,2),'Marker','o','MarkerSize',12,'MarkerFaceColor','r','Color','b','LineStyle','none');hold on;
-plot(p_sav{t}(adv,1),p_sav{t}(adv,2),'Marker','o','MarkerSize',24,'MarkerFaceColor','r','Color','b','LineStyle','none'); hold on;
+plot(p_sav{t}(:,1),p_sav{t}(:,2),'Marker','o','MarkerSize',12,'MarkerFaceColor','w','Color','b','LineStyle','none');hold on;
+plot(p_sav{t}(adv,1),p_sav{t}(adv,2),'Marker','o','MarkerSize',12,'MarkerFaceColor','r','Color','b','LineStyle','none'); hold on;
 axis('equal')
 axis([0 1 0 1]);
 axis('off');
@@ -158,7 +162,7 @@ axis('off')
 set(gca,'xtick',[]);
 set(gca,'ytick',[]);
 movie(h2,M,1,30);
-% movie2avi(M, 'vid_exp_50_0_75_0_75.avi', 'compression', 'None','quality',100,'fps',15);
+% movie2avi(M, 'vid_exp_100_0_75_0_75_1f_t2.avi', 'compression', 'None','quality',100,'fps',10);
 % % 
 % % 
 % % 
@@ -178,3 +182,9 @@ movie(h2,M,1,30);
 % set(gca,'ztick',[0 1]);
 % view(3)
  
+% COST PLOT
+
+h_cst = figure('position',[0 0 700 700],'Color',[1 1 1]);
+plot(1:stage,cst_aug,'s-');legend('10','10(1)','10(2)','10(3)');xlabel('stage');ylabel('cost');
+
+
