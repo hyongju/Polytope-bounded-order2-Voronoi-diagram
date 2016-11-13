@@ -56,12 +56,12 @@ for i = 1:N-1
             color_code = jet(size(p_appended{i}{j},1));
             if ~ismember(m1,adv)
             plot(p_appended{i}{j}(m1,1),p_appended{i}{j}(m1,2),...,
-                'MarkerSize',12,'Marker','o',...,
+                'MarkerSize',6,'Marker','o',...,
                 'Color',[0 0 1],...,
                 'MarkerFaceColor','b','LineWidth',1,'LineStyle','none');
             else
             plot(p_appended{i}{j}(m1,1),p_appended{i}{j}(m1,2),...,
-                'MarkerSize',12,'Marker','o',...,
+                'MarkerSize',6,'Marker','o',...,
                 'Color',[0 0 1],...,
                 'MarkerFaceColor','r','LineWidth',1,'LineStyle','none');
                 

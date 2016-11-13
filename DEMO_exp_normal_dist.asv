@@ -1,7 +1,7 @@
 % THIS IS A VERSION WITH NO FAILURES....
 clear all;close all;clc
 %% generate random samples
-n = 50;
+n = 10;
 % % m = 15;
 d = 2;
 eta = 1/2;
@@ -13,7 +13,7 @@ figure,plot(pos(:,1),pos(:,2),'x');axis([0 1 0 1]);
 % % pos = rand(n,d);
 % % pos = [0.15 1-0.15;1-0.15 1-0.15;0.5 0.5;0.15 0.15;1-0.15 0.15];
 vmax = 1/eps;       % velocity constraint is RELAXED....
-stage = 100;
+stage = 1;
 coef = 100;
 
 % bnd_pnts = [0 1;1 1;1 0;0 0];
@@ -70,7 +70,7 @@ view(0,90)
 % p2  = net(p1_1,n1); % generate samples points for Monte-Carlo
 p_sav{1} = pos;
 % adv = [1 2 3 4 5];
-adv = [];           % index set of faulty nodes
+adv = [1];           % index set of faulty nodes
 type = 3;
 % type 1 - sensor failure
 % type 2 - servo failure
@@ -116,16 +116,14 @@ for t = 1:stage
 end
 cst
 figure,plot(1:stage,cst,'-s');xlabel('stage');ylabel('cost');
-% for qq = 1:50
 h0 = figure('position',[0 0 700 700],'Color',[1 1 1]);
 k = 0;
-t = 39;
-% t = qq;
+t = stage;
 for i = 1:size(voronoi_rg{t},1)*size(voronoi_rg{t},2)
     col(i,:)= rand(1,3);
 %     col(i,:) = [i/(size(voronoi_rg{t},1)*size(voronoi_rg{t},2)) 1 1];
 end
-% col = distinguishable_colors(size(voronoi_rg{t},1)*size(voronoi_rg{t},2));
+col = distinguishable_colors(size(voronoi_rg{t},1)*size(voronoi_rg{t},2));
 for i = 1:size(voronoi_rg{t},1)
     for j = 1:size(voronoi_rg{t},2)
         if ~isempty(voronoi_rg{t}{i,j})
@@ -143,7 +141,6 @@ end
 bdp = convhull(bnd_pnts);
 plot(bnd_pnts(bdp,1),bnd_pnts(bdp,2),'k-');
 hold on;
-plot3(X_int(:,1),X_int(:,2),p_int(:),'Marker','.','MarkerSize',0.5,'LineStyle','none');
 plot(p_sav{t}(:,1),p_sav{t}(:,2),'Marker','o','MarkerSize',6,'MarkerFaceColor','k','Color','k','LineStyle','none');hold on;
 plot(p_sav{t}(adv,1),p_sav{t}(adv,2),'Marker','o','MarkerSize',6,'MarkerFaceColor','r','Color','k','LineStyle','none'); hold on;
 axis('equal')
@@ -151,7 +148,7 @@ axis([0 1 0 1]);
 axis('off');
 set(gca,'xtick',[]);
 set(gca,'ytick',[]);  
-% end
+
 p_ani{1} = p_sav{1};
 p_ani{2} = p_sav{stage+1};
 
@@ -184,26 +181,16 @@ movie(h2,M,1,30);
 % set(gca,'ytick',[0 1]);
 % set(gca,'ztick',[0 1]);
 % view(3)
-
-h_cst = figure('position',[0 0 500 500],'Color',[1 1 1]);
-plot(1:stage,cst,'s-');xlabel('stage');ylabel('cost');
-
-
-
+ 
 % COST PLOT
 h_cst = figure('position',[0 0 500 500],'Color',[1 1 1]);
 plot(1:stage,cst_aug,'s-');legend('100','100(1)','100(2)','100(3)');xlabel('stage');ylabel('cost');
 
 
-%TWO
+TWO
 h_cst = figure('position',[0 0 500 500],'Color',[1 1 1]);
 plot(1:100,cst_aug,'-');xlabel('stage');ylabel('cost');
 hold on;
 plot(1:100,cst_aug2,'-')
 
-%three
-h_cst = figure('position',[0 0 500 500],'Color',[1 1 1]);
-plot(1:100,cst_aug,'-');legend('n=10','n=50','n=100');xlabel('stage');ylabel('cost');
-hold on;
-% plot(1:100,cst_aug2,'-')
 

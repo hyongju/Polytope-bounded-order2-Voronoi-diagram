@@ -1,4 +1,4 @@
-function [vornb,vorvx,A,b] = polybnd_voronoi(pos,bnd_pnts)
+function [vornb,vorvx,Aaug,baug] = polybnd_voronoi(pos,bnd_pnts)
 % -------------------------------------------------------------------------
 % -------------------------------------------------------------------------
 % [Voronoi neighbor,Voronoi vertices] = voronoi_3d(points, boundary)
@@ -22,6 +22,8 @@ function [vornb,vorvx,A,b] = polybnd_voronoi(pos,bnd_pnts)
 %       con2vert.m (Michael Keder)
 % -------------------------------------------------------------------------
 % Written by Hyongju Park, hyongju@gmail.com / park334@illinois.edu
+
+tol = 1e-15;
 
 K = convhull(bnd_pnts);
 bnd_pnts = bnd_pnts(K,:);
@@ -72,7 +74,7 @@ end
 % convert set of inequality constraints to the set of vertices at the
 % intersection of those inequalities used 'con2vert.m' by Michael Kleder 
 for i =1:size(pos,1)
-   V{i}= MY_con2vert(Aaug{i},baug{i});
+   V{i}= lcon2vert(Aaug{i},baug{i},[],[],tol);
    ID{i} = convhull(V{i});
    vorvx{i} = V{i}(ID{i},:);
 end
