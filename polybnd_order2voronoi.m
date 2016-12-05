@@ -1,5 +1,67 @@
 function [voronoi_rg,vornb,vornb2] = polybnd_order2voronoi(pos,bnd_pnts)
 % clear all;close all;
+tol =1e-15;
+% pos = [    0.7068    0.8947
+%     0.8904    0.5528
+%     0.4963    0.5781
+%     0.7741    0.7591
+%     0.8558    0.3381
+%     0.5224    0.5277
+%     0.5084    0.8073
+%     0.7372    0.3422
+%     0.2652    0.7418
+%     0.7052    0.5570
+%     0.4325    0.4516
+%     0.8581    0.6408
+%     0.4433    0.8031
+%     0.5462    0.3019
+%     0.5061    0.4651
+%     0.7470    0.6994
+%     0.3227    0.4089
+%     0.6431    0.5673
+%     0.4648    0.7075
+%     0.7683    0.4687
+%     0.3065    0.6093
+%     0.5885    0.7690
+%     0.4758    0.3022
+%     0.6207    0.4731
+%     0.3468    0.7374
+%     0.6435    0.4185
+%     0.4570    0.4942
+%     0.6864    0.6051
+%     0.3793    0.4512
+%     0.5467    0.5607
+%     0.5252    0.6114
+%     0.6267    0.3264
+%     0.3127    0.5047
+%     0.6408    0.7719
+%     0.4509    0.3905
+%     0.6943    0.4918
+%     0.4260    0.5603
+%     0.5754    0.4391
+%     0.4759    0.5187
+%     0.6062    0.6218
+%     0.3910    0.3277
+%     0.5392    0.4833
+%     0.4669    0.6026
+%     0.7925    0.4192
+%     0.3927    0.5165
+%     0.5475    0.6779
+%     0.4848    0.4343
+%     0.5909    0.5303
+%     0.3954    0.6231
+%     0.5739    0.3856];
+% bnd_pnts = [0.9087    0.7883
+%     0.7150    0.9939
+%     0.3843    0.9840
+%     0.0261    0.9285
+%     0.0347    0.4929
+%     0.0538    0.0427
+%     0.2446    0.0311
+%     0.7657    0.0021
+%     0.9811    0.1657
+%     0.9846    0.5615
+%     0.9087    0.7883];
 %% =======================================================
 % Order-2 Voronoi Diagram with set of points in 2D/3D polygon
 % ========================================================
@@ -34,9 +96,29 @@ function [voronoi_rg,vornb,vornb2] = polybnd_order2voronoi(pos,bnd_pnts)
 % general position assumptions
 % -------------------------------------------------------------------------
 %%
-[vornb,~,A_org,b_org] = polybnd_voronoi(pos,bnd_pnts);      % 
+[vornb,vorvx,A_org,b_org] = polybnd_voronoi(pos,bnd_pnts);      % 
+%%
+% h0 = figure('position',[0 0 700 700],'Color',[1 1 1]);
+% k=0;
+% % for i = 1:size(voronoi_rg{t},1)*size(voronoi_rg{t},2)
+% %     col(i,:)= rand(1,3);
+% % %     col(i,:) = [i/(size(voronoi_rg{t},1)*size(voronoi_rg{t},2)) 1 1];
+% % end
+% % col = distinguishable_colors(size(vorvx{t},2));
+% for i = 1:size(vorvx,2)
+%         if ~isempty(vorvx{i})
+%             k = k+1;
+% 
+%             plot(vorvx{i}(:,1),vorvx{i}(:,2),'-','Color','b');
+%             hold on;
+% 
+%         end
+% end
+% plot(pos(:,1),pos(:,2),'o');
+
+%%
 % obtain set of voronoi neighbors/vertices
-[Abnd,bbnd] = vert2lcon(bnd_pnts);              % obtain series of linear inequalities that defined Voronoi regions
+[Abnd,bbnd] = vert2lcon(bnd_pnts,tol);              % obtain series of linear inequalities that defined Voronoi regions
 %% create list
 for i = 1:size(pos,1)
     k = 0;
@@ -66,7 +148,7 @@ for m1 =1:size(vornb2,2)
 
         Aagmt1 = [Aag1{c1};A_org{c2};Abnd];
         bagmt1 = [bag1{c1};b_org{c2};bbnd];
-        Vl_tmp1= MY_con2vert(Aagmt1,bagmt1);
+        Vl_tmp1= lcon2vert(Aagmt1,bagmt1,[],[],tol);
         if ~isempty(Vl_tmp1)
             % remove Voronoi regions that are not in the interior of the polytope
             if inhull(Vl_tmp1,bnd_pnts,[],1e-15)
@@ -93,7 +175,7 @@ for m1 =1:size(vornb2,2)
         [~,~,Aag2,bag2] = polybnd_voronoi(pos2,bnd_pnts);
         Aagmt2 = [Aag2{c2-1};A_org{c1};Abnd];
         bagmt2 = [bag2{c2-1};b_org{c1};bbnd];
-        Vl_tmp2= MY_con2vert(Aagmt2,bagmt2);
+        Vl_tmp2= lcon2vert(Aagmt2,bagmt2,[],[],tol);
         if ~isempty(Vl_tmp2)
             % remove Voronoi regions that are not in the interior of the polytope
             if inhull(Vl_tmp2,bnd_pnts,[],1e-15)
@@ -108,7 +190,8 @@ for m1 =1:size(vornb2,2)
         end
         
         voronoi_rg_tmp = [voronoi_rg_tmp1;voronoi_rg_tmp2];
-        if ~isempty(voronoi_rg_tmp )
+%         [~, idx_i] = unique(num2str(voronoi_rg_tmp,4),'rows'); % precision 4
+        if ~isempty(voronoi_rg_tmp ) %&& size(idx_i,1)> size(pos,2)
             voronoi_rg{c1,c2} = voronoi_rg_tmp(convhull(voronoi_rg_tmp),:);
         else
             voronoi_rg{c1,c2} = [];
@@ -117,31 +200,35 @@ for m1 =1:size(vornb2,2)
 end
 
 
-%%%% test
-
+% %%% test
+% 
 % h0 = figure('position',[0 0 700 700],'Color',[1 1 1]);
 % k = 0;
-% % t = 16;
+% t = 16;
 % for i = 1:size(voronoi_rg,1)*size(voronoi_rg,2)
 %     col(i,:)= rand(1,3);
-% %     col(i,:) = [i/(size(voronoi_rg{t},1)*size(voronoi_rg{t},2)) 1 1];
+%     col(i,:) = [i/(size(voronoi_rg{t},1)*size(voronoi_rg{t},2)) 1 1];
 % end
 % col = distinguishable_colors(size(voronoi_rg,1)*size(voronoi_rg,2));
 % for i = 1:size(voronoi_rg,1)
 %     for j = 1:size(voronoi_rg,2)
 %         if ~isempty(voronoi_rg{i,j})
 %             k = k+1;
+%             if (k == 53)
+%                 i
+%                 j
+%             end
 %             plot(voronoi_rg{i,j}(:,1),voronoi_rg{i,j}(:,2),'-','Color','b');
 %             hold on;
-%              patch(voronoi_rg{i,j}(:,1),voronoi_rg{i,j}(:,2),col(k,:));
+%             patch(voronoi_rg{i,j}(:,1),voronoi_rg{i,j}(:,2),col(k,:));
 %         end
 %     end
 % end
 % bdp = convhull(bnd_pnts);
 % plot(bnd_pnts(bdp,1),bnd_pnts(bdp,2),'b-');
 % hold on;
-% plot(pos(:,1),pos(:,2),'Marker','o','MarkerSize',12,'MarkerFaceColor','r','Color','b','LineStyle','none');hold on;
-% % plot(p_sav{t}(adv,1),p_sav{t}(adv,2),'Marker','o','MarkerSize',24,'MarkerFaceColor','r','Color','b','LineStyle','none'); hold on;
+% plot(pos(:,1),pos(:,2),'Marker','o','MarkerSize',6,'MarkerFaceColor','r','Color','b','LineStyle','none');hold on;
+% plot(p_sav{t}(adv,1),p_sav{t}(adv,2),'Marker','o','MarkerSize',24,'MarkerFaceColor','r','Color','b','LineStyle','none'); hold on;
 % axis('equal')
 % axis([0 1 0 1]);
 % axis('off');

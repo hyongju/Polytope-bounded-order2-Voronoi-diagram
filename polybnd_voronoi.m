@@ -28,7 +28,7 @@ tol = 1e-15;
 K = convhull(bnd_pnts);
 bnd_pnts = bnd_pnts(K,:);
 
-[Abnd,bbnd] = vert2lcon(bnd_pnts); 
+[Abnd,bbnd] = vert2lcon(bnd_pnts,tol); 
 % obtain inequality constraints for convex polytope boundary
 % vert2lcon.m by Matt Jacobson that is an extension of the 'vert2con' by
 % Michael Keder

@@ -116,10 +116,11 @@ for t = 1:stage
 end
 cst
 figure,plot(1:stage,cst,'-s');xlabel('stage');ylabel('cost');
-% for qq = 1:50
+% for qq = 1:100
 h0 = figure('position',[0 0 700 700],'Color',[1 1 1]);
 k = 0;
-t = 39;
+% t = 39;
+t = 100;
 % t = qq;
 for i = 1:size(voronoi_rg{t},1)*size(voronoi_rg{t},2)
     col(i,:)= rand(1,3);
@@ -165,7 +166,7 @@ axis('off')
 set(gca,'xtick',[]);
 set(gca,'ytick',[]);
 movie(h2,M,1,30);
-% movie2avi(M, 'vid_exp_100_0_75_0_75_no_flt.avi', 'compression', 'None','quality',100,'fps',10);
+% movie2avi(M, 'vid_exp_100_0_75_0_75_no_flt_n_50.avi', 'compression', 'None','quality',100,'fps',10);
 % % 
 % % 
 % % 
