@@ -13,7 +13,7 @@ figure,plot(pos(:,1),pos(:,2),'x');axis([0 1 0 1]);
 % % pos = rand(n,d);
 % % pos = [0.15 1-0.15;1-0.15 1-0.15;0.5 0.5;0.15 0.15;1-0.15 0.15];
 vmax = 1/eps;       % velocity constraint is RELAXED....
-stage = 10;
+stage = 20;
 coef = 100;
 
 % bnd_pnts = [0 1;1 1;1 0;0 0];
@@ -27,17 +27,18 @@ bnd_pnts = p2_0(bnd_idx,:);
 
 
 
-mu = [0.75 0.75]; 
-SIGMA = 0.05*eye(2);
-X_test = mvnrnd(mu,SIGMA,10000); 
-p_test = mvnpdf(X_test,mu,SIGMA); 
+% mu = [0.75 0.75]; 
+% SIGMA = 0.05*eye(2);
+% X_test = mvnrnd(mu,SIGMA,10000); 
+% p_test = mvnpdf(X_test,mu,SIGMA); 
 k = 0;
 
+X_test = net(p1_1,10000);
 [A_bnd,b_bnd] = vert2lcon(bnd_pnts);     
 in_y = inhull(X_test,bnd_pnts,[],1e-15);
 
 X_int = X_test(in_y,:);
-p_int_unnorm = p_test(in_y,:);
+p_int_unnorm = ones(size(X_int));
 
 % for i = 1:size(X_test,1)
 %     if X_test(i,1) >=0 && X_test(i,2) <= 1 && X_test(i,1) <=1 && X_test(i,2) >= 0
@@ -47,6 +48,7 @@ p_int_unnorm = p_test(in_y,:);
 %     end
 % end
 p_int = p_int_unnorm / sum(p_int_unnorm);
+
 h_00 = figure('position',[100 100 600 600],'Color',[1 1 1]);
 plot3(X_int(:,1),X_int(:,2),p_int(:),'Marker','.','MarkerSize',1,'LineStyle','none');
 hold on;
