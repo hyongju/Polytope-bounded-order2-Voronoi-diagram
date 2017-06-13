@@ -2,18 +2,19 @@
 % polytope in 2D/3D
 clear all;close all;clc
 %% generate random samples
-n = 10;         % number of points
+n = 20;         % number of points
 d = 3;          % dimension e.g., 2, 3
 p1_0 = haltonset(d,'Skip',1e3,'Leap',1e2);  % generate halton sequence
 p1_1 = scramble(p1_0,'RR2');                % scrambled sequnce
 p1_2 = net(p1_1,n);
-m = 10;                                     % number of points for boundary
-bnd0 = net(p1_1,m);                         % generate boundary point-candidates
+m = 100;                                     % number of points for boundary
+% bnd0 = net(p1_1,m);                         % generate boundary point-candidates
+bnd0 = [0 0 0;0 1 0;1 0 0;1 1 0;0 0 1;0 1 1;1 0 1;1 1 1];
 % bnd0 = rand(m,d);
 % bnd0 = [0 0; 1 0; 1 1; 0 1];
 K = convhull(bnd0);
 bnd_pnts = bnd0(K,:);                       % take boundary points from vertices of convex polytope formed with the boundary point-candidates
-pos = p1_2(inhull(p1_2,bnd0,[],0.001),:);            % n' out of n points contained in bnd_pnts
+pos = p1_2(inhull(p1_2,bnd0,[],eps),:);            % n' out of n points contained in bnd_pnts
 
 %% call function "polybnd_order2voronoi.m"
 %% 
@@ -57,6 +58,8 @@ switch d
     case 3
         k = 0;
         col = distinguishable_colors(size(voronoi_rg,1)*size(voronoi_rg,2));
+%         col = ones(size(voronoi_rg,1),size(voronoi_rg,2))*0.5;
+%         col = 0.5*ones(size(col))
         for i = 1:size(voronoi_rg,1)
             for j = 1:size(voronoi_rg,2)
                 if ~isempty(voronoi_rg{i,j})

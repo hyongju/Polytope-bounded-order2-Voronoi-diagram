@@ -3,7 +3,7 @@ clear all;close all;clc
 %% generate random samples
 n = 5;
 % % m = 15;
-d = 2;
+d = 3;
 eta = 1/2;
 p1_0 = haltonset(d,'Skip',1e3,'Leap',1e2);
 p1_1 = scramble(p1_0,'RR2');
